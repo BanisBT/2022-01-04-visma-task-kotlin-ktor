@@ -16,4 +16,5 @@ fun Application.configure() {
     configureMonitoring()
     configureTemplating()
     configureSerialization()
+    configureMessageConfigure()
 }

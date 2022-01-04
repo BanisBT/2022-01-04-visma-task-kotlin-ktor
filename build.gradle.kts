@@ -2,6 +2,9 @@ val ktor_version: String by project
 val kotlin_version: String by project
 val logback_version: String by project
 val prometeus_version: String by project
+val koin_version: String by project
+val rabbitmq_version: String by project
+val ktor_rabbitmq_feature: String by project
 
 plugins {
     application
@@ -16,6 +19,7 @@ application {
 
 repositories {
     mavenCentral()
+    maven ("https://jitpack.io")
 }
 
 dependencies {
@@ -26,6 +30,16 @@ dependencies {
     implementation("io.ktor:ktor-jackson:$ktor_version")
     implementation("io.ktor:ktor-server-jetty:$ktor_version")
     implementation("ch.qos.logback:logback-classic:$logback_version")
+
+//    koin
+    implementation("io.insert-koin:koin-core:$koin_version")
+    implementation("io.insert-koin:koin-ktor:$koin_version")
+
+    //    rabbitMq
+    implementation ("com.github.JUtupe:ktor-rabbitmq:$ktor_rabbitmq_feature")
+    implementation( "com.rabbitmq:amqp-client:$rabbitmq_version")
+
+//    test
     testImplementation("io.ktor:ktor-server-tests:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
 }
