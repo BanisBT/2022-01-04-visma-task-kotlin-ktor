@@ -1,4 +1,4 @@
-package com.tbarauskas.rabbitMq
+package com.tbarauskas.features.rabbitMq.model
 
 data class MyObject(
     val id: Int,

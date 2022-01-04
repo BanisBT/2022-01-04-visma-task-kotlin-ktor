@@ -1,7 +1,9 @@
 package com.tbarauskas.plugins
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.tbarauskas.rabbitMq.MyObject
+import com.tbarauskas.features.rabbitMq.configuration.RabbitMqConfig
+import com.tbarauskas.features.rabbitMq.model.MyObject
+import com.typesafe.config.ConfigFactory
 import io.ktor.application.*
 import io.ktor.routing.*
 import pl.jutupe.ktor_rabbitmq.RabbitMQ
@@ -12,12 +14,16 @@ import pl.jutupe.ktor_rabbitmq.rabbitConsumer
 fun Application.configureMessageConfigure() {
 
     install(RabbitMQ) {
-        uri = "amqp://guest:guest@localhost:5672"
-        connectionName = "Connection name"
+        val config = ConfigFactory.load()
+        val rabbitMqConfig = RabbitMqConfig.fromConfig(config)
+        val mapper = jacksonObjectMapper()
+
+        uri = rabbitMqConfig.uri
+        connectionName = rabbitMqConfig.connectionName
 
         //serialize and deserialize functions are required
-        serialize { jacksonObjectMapper().writeValueAsBytes(it) }
-        deserialize { bytes, type -> jacksonObjectMapper().readValue(bytes, type.javaObjectType) }
+        serialize { mapper.writeValueAsBytes(it) }
+        deserialize { bytes, type -> mapper.readValue(bytes, type.javaObjectType) }
 
         //example initialization logic
         initialize {
@@ -35,7 +41,8 @@ fun Application.configureMessageConfigure() {
     routing {
         get("anyEndpoint") {
             call.publish("exchange", "routingKey", null,
-                MyObject(1, "Routing" ,"test name"))
+                MyObject(1, "Routing" ,"test name")
+            )
         }
     }
 
