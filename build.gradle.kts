@@ -5,6 +5,7 @@ val prometeus_version: String by project
 val koin_version: String by project
 val rabbitmq_version: String by project
 val ktor_rabbitmq_feature: String by project
+val config4k_version: String by project
 
 plugins {
     application
@@ -31,6 +32,9 @@ dependencies {
     implementation("io.ktor:ktor-server-jetty:$ktor_version")
     implementation("ch.qos.logback:logback-classic:$logback_version")
 
+//    ConfigFactory extra methods (extract, ..)
+    implementation("io.github.config4k:config4k:$config4k_version")
+
 //    koin
     implementation("io.insert-koin:koin-core:$koin_version")
     implementation("io.insert-koin:koin-ktor:$koin_version")
@@ -42,4 +46,9 @@ dependencies {
 //    test
     testImplementation("io.ktor:ktor-server-tests:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
+}
+
+// for understanding junit5
+tasks.test {
+    useJUnitPlatform()
 }

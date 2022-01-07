@@ -17,5 +17,5 @@ fun Application.configure() {
     configureTemplating()
     configureSerialization()
     configureMessageConfigure()
-    configureDI()
+    configureDependencyInjection()
 }
