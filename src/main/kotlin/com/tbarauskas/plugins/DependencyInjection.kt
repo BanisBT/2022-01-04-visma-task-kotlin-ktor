@@ -1,6 +1,6 @@
 package com.tbarauskas.plugins
 
-import com.tbarauskas.features.messageQueue.module.messageQueueServiceModule
+import com.tbarauskas.features.messageQueue.messageQueueServiceModule
 import com.tbarauskas.features.slack.SlackConfig
 import com.tbarauskas.features.slack.slackServiceModule
 import com.typesafe.config.ConfigFactory

@@ -6,6 +6,9 @@ val koin_version: String by project
 val rabbitmq_version: String by project
 val ktor_rabbitmq_feature: String by project
 val config4k_version: String by project
+val jupiter_version: String by project
+val mockk_version: String by project
+val strikt_version: String by project
 
 plugins {
     application
@@ -46,6 +49,15 @@ dependencies {
 //    test
     testImplementation("io.ktor:ktor-server-tests:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
+
+    testImplementation("io.insert-koin:koin-test-junit5:$koin_version")
+    testImplementation("org.junit.jupiter:junit-jupiter:$jupiter_version")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$jupiter_version")
+    testImplementation("io.ktor:ktor-server-tests:$ktor_version")
+    testImplementation("io.ktor:ktor-server-test-host:$ktor_version")
+    testImplementation("io.mockk:mockk:$mockk_version")
+    testImplementation("io.strikt:strikt-jvm:$strikt_version")
+
 }
 
 // for understanding junit5

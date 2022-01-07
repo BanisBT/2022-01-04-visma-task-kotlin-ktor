@@ -1,4 +1,4 @@
-package com.tbarauskas.features.rabbitMq.configuration
+package com.tbarauskas.features.rabbitMq
 
 import com.typesafe.config.Config
 

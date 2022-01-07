@@ -1,7 +1,7 @@
-package com.tbarauskas.features.messageQueue.module
+package com.tbarauskas.features.messageQueue
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.tbarauskas.features.messageQueue.service.MessageQueueService
+import com.tbarauskas.features.messageQueue.MessageQueueService
 import org.koin.dsl.module
 import pl.jutupe.ktor_rabbitmq.RabbitMQ
 

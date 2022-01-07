@@ -1,8 +1,8 @@
 package com.tbarauskas.plugins
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.tbarauskas.features.rabbitMq.configuration.RabbitMqConfig
-import com.tbarauskas.features.rabbitMq.model.MyObject
+import com.tbarauskas.features.rabbitMq.RabbitMqConfig
+import com.tbarauskas.features.rabbitMq.MyObject
 import com.typesafe.config.ConfigFactory
 import io.ktor.application.*
 import io.ktor.routing.*

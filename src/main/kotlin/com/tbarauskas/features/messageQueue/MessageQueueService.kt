@@ -1,4 +1,4 @@
-package com.tbarauskas.features.messageQueue.service
+package com.tbarauskas.features.messageQueue
 
 import pl.jutupe.ktor_rabbitmq.RabbitMQ
 import pl.jutupe.ktor_rabbitmq.publish
