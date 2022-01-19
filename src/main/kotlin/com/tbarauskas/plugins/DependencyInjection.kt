@@ -9,14 +9,15 @@ import org.koin.ktor.ext.Koin
 import pl.jutupe.ktor_rabbitmq.RabbitMQ
 
 fun Application.configureDependencyInjection() {
-    val rabbitMq = this.attributes[RabbitMQ.RabbitMQKey]
+//    Kaip galima issitraukti objeektus is application aplinkos
+//    val rabbitMq = this.attributes[RabbitMQ.RabbitMQKey]
     val config = ConfigFactory.load()
 
     val slackConfig: SlackConfig = SlackConfig.fromConfig(config)
 
     install(Koin) {
         modules(
-            messageQueueServiceModule(rabbitMq), slackServiceModule(slackConfig)
+            messageQueueServiceModule(), slackServiceModule(slackConfig)
         )
     }
 }

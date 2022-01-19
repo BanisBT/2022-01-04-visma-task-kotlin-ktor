@@ -1,47 +1,28 @@
 package com.tbarauskas.plugins
 
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.tbarauskas.features.rabbitMq.RabbitMqConfig
+import com.tbarauskas.features.slack.SlackTryCatchException
 import com.tbarauskas.features.rabbitMq.MyObject
-import com.typesafe.config.ConfigFactory
+import com.tbarauskas.features.slack.SlackAppName
+import com.tbarauskas.features.slack.SlackService
 import io.ktor.application.*
 import io.ktor.routing.*
-import pl.jutupe.ktor_rabbitmq.RabbitMQ
-import pl.jutupe.ktor_rabbitmq.consume
-import pl.jutupe.ktor_rabbitmq.publish
-import pl.jutupe.ktor_rabbitmq.rabbitConsumer
+import org.koin.ktor.ext.inject
+import pl.jutupe.ktor_rabbitmq.*
 
 fun Application.configureMessageConfigure() {
+    val rabbitMQ by inject<RabbitMQInstance>()
+    val slackService: SlackService by inject()
 
     install(RabbitMQ) {
-        val config = ConfigFactory.load()
-        val rabbitMqConfig = RabbitMqConfig.fromConfig(config)
-        val mapper = jacksonObjectMapper()
-
-        uri = rabbitMqConfig.uri
-        connectionName = rabbitMqConfig.connectionName
-
-        //serialize and deserialize functions are required
-        serialize { mapper.writeValueAsBytes(it) }
-        deserialize { bytes, type -> mapper.readValue(bytes, type.javaObjectType) }
-
-        //example initialization logic
-        initialize {
-            exchangeDeclare("exchange", "direct", true)
-            queueDeclare("work_queue", true, false, false, emptyMap())
-            queueBind(
-                "work_queue",
-                "exchange",
-                "routingKey"
-            )
-        }
+        rabbitMQInstance = rabbitMQ
     }
 
 //publish example
     routing {
         get("anyEndpoint") {
-            call.publish("exchange", "routingKey", null,
-                MyObject(1, "Routing" ,"test name")
+            call.publish(
+                "exchange", "routingKey", null,
+                MyObject(1, "Routing", "test name")
             )
         }
     }
@@ -55,11 +36,20 @@ fun Application.configureMessageConfigure() {
 
 //consume work queue with manual ack example
     rabbitConsumer {
-        consume<MyObject>("work_queue") { body ->
-            println("Consumed task $body")
-
-            // We can omit 'this' part
-            this.ack(multiple = false)
+//        consume<MyObject>("work_queue") { body ->
+//            println("Consumed task $body")
+//
+//            // We can omit 'this' part
+//            this.ack(multiple = false)
+//        }
+        consume<String>("queueTest", autoAck = false) { message ->
+            try {
+                println("Consume here: $message")
+                slackService.sendPlainTextMessageToSlack(message, SlackAppName.BANIS)
+                this.ack(multiple = true)
+            } catch (e: SlackTryCatchException) {
+                this.nack(multiple = true, requeue = true)
+            }
         }
     }
 }

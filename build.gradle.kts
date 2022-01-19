@@ -9,6 +9,7 @@ val config4k_version: String by project
 val jupiter_version: String by project
 val mockk_version: String by project
 val strikt_version: String by project
+val slack_version: String by project
 
 plugins {
     application
@@ -34,6 +35,15 @@ dependencies {
     implementation("io.ktor:ktor-jackson:$ktor_version")
     implementation("io.ktor:ktor-server-jetty:$ktor_version")
     implementation("ch.qos.logback:logback-classic:$logback_version")
+
+//    slack
+    implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation("com.slack.api:slack-api-client:$slack_version")
+
+    // Add these dependencies if you want to use the Kotlin DSL for building rich messages
+    implementation("com.slack.api:slack-api-model-kotlin-extension:$slack_version")
+    implementation("com.slack.api:slack-api-client-kotlin-extension:$slack_version")
 
 //    ConfigFactory extra methods (extract, ..)
     implementation("io.github.config4k:config4k:$config4k_version")

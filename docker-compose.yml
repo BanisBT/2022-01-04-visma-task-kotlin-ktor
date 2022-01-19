@@ -9,6 +9,7 @@ services:
       - 5672:5672
       - 15672:15672
     volumes:
+#      - taip galima pakrauti duomenis paleidziant sistema
 #      - ./rabbitmq/etc/rabbitmq.config:/etc/rabbitmq/rabbitmq.config
 #      - ./rabbitmq/etc/definitions.json:/etc/rabbitmq.json
       - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
