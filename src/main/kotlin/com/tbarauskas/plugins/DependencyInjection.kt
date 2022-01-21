@@ -1,6 +1,7 @@
 package com.tbarauskas.plugins
 
 import com.tbarauskas.features.messageQueue.messageQueueServiceModule
+import com.tbarauskas.features.rabbitMq.RabbitMqConfig
 import com.tbarauskas.features.slack.SlackConfig
 import com.tbarauskas.features.slack.slackServiceModule
 import com.typesafe.config.ConfigFactory
@@ -14,10 +15,11 @@ fun Application.configureDependencyInjection() {
     val config = ConfigFactory.load()
 
     val slackConfig: SlackConfig = SlackConfig.fromConfig(config)
+    val rabbitMQConfig: RabbitMqConfig = RabbitMqConfig.fromConfig(config)
 
     install(Koin) {
         modules(
-            messageQueueServiceModule(), slackServiceModule(slackConfig)
+            messageQueueServiceModule(rabbitMQConfig), slackServiceModule(slackConfig)
         )
     }
 }

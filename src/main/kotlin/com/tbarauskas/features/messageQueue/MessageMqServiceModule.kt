@@ -2,18 +2,19 @@ package com.tbarauskas.features.messageQueue
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.tbarauskas.features.messageQueue.MessageQueueService
+import com.tbarauskas.features.rabbitMq.RabbitMqConfig
 import org.koin.dsl.module
 import pl.jutupe.ktor_rabbitmq.RabbitMQ
 import pl.jutupe.ktor_rabbitmq.RabbitMQConfiguration
 import pl.jutupe.ktor_rabbitmq.RabbitMQInstance
 
-fun messageQueueServiceModule() = module {
+fun messageQueueServiceModule(rabbitMqConfig: RabbitMqConfig) = module {
     single {
        val rabbitMQInstance = RabbitMQInstance(
             RabbitMQConfiguration.create()
             .apply {
-                uri = "amqp://guest:guest@localhost:5672"
-                connectionName = "Connection name"
+                uri = "amqp://guest:guest@${rabbitMqConfig.host}:${rabbitMqConfig.amqpPort}"
+                connectionName = rabbitMqConfig.connectionName
 
                 serialize { jacksonObjectMapper().writeValueAsBytes(it) }
                 deserialize { bytes, type -> jacksonObjectMapper().readValue(bytes, type.javaObjectType) }
@@ -28,9 +29,12 @@ fun messageQueueServiceModule() = module {
         rabbitMQInstance
     }
     single {
+        rabbitMqConfig
+    }
+    single {
         jacksonObjectMapper()
     }
     single {
-        MessageQueueService(get<RabbitMQInstance>())
+        MessageQueueService(get())
     }
 }
