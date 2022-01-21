@@ -6,10 +6,10 @@ import com.slack.api.methods.request.chat.ChatPostMessageRequest
 import com.slack.api.methods.response.chat.ChatPostMessageResponse
 
 class SlackService(
-    private val slackConfig: SlackConfig
+    private val slackConfig: SlackConfig,
+    private val slack: Slack
 ) {
     fun sendPlainTextMessageToSlack(message: String, slackAppName: SlackAppName){
-        val slack = Slack.getInstance()
         val methodsClient: MethodsClient = slack.methods(slackConfig.configMap[slackAppName]?.oauthToken)
 
         val messageRequest: ChatPostMessageRequest = ChatPostMessageRequest.builder()

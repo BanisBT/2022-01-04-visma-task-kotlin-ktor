@@ -6,10 +6,10 @@ import com.tbarauskas.features.slack.SlackConfig
 import com.tbarauskas.features.slack.slackServiceModule
 import com.typesafe.config.ConfigFactory
 import io.ktor.application.*
+import org.koin.core.module.Module
 import org.koin.ktor.ext.Koin
-import pl.jutupe.ktor_rabbitmq.RabbitMQ
 
-fun Application.configureDependencyInjection() {
+fun Application.configureDependencyInjection(vararg moduleOverrides: Module) {
 //    Kaip galima issitraukti objeektus is application aplinkos
 //    val rabbitMq = this.attributes[RabbitMQ.RabbitMQKey]
     val config = ConfigFactory.load()
@@ -19,7 +19,7 @@ fun Application.configureDependencyInjection() {
 
     install(Koin) {
         modules(
-            messageQueueServiceModule(rabbitMQConfig), slackServiceModule(slackConfig)
+            messageQueueServiceModule(rabbitMQConfig), slackServiceModule(slackConfig), *moduleOverrides
         )
     }
 }

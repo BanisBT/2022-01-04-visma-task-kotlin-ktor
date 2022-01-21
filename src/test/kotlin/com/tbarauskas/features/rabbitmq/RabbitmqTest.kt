@@ -6,6 +6,7 @@ import com.tbarauskas.features.rabbitMq.RabbitMqConfig
 import com.tbarauskas.features.slack.SlackAppName
 import com.tbarauskas.features.slack.SlackService
 import com.tbarauskas.features.slack.SlackTryCatchException
+import com.tbarauskas.plugins.*
 import io.ktor.server.testing.*
 import org.junit.jupiter.api.Test
 import org.koin.test.KoinTest
@@ -89,6 +90,24 @@ internal class RabbitmqTest: KoinTest {
             assertEquals(rabbitMqConfig.host, "localhost")
             assertEquals(rabbitMqConfig.amqpPort, "5672")
             assertEquals(rabbitMqConfig.connectionName, "Connection name")
+        }
+    }
+
+    @Test
+    fun `is rabbitMq config data mocked`() {
+        withTestApplication({
+            configureRouting()
+            configureMonitoring()
+            configureTemplating()
+            configureSerialization()
+            configureDependencyInjection(mockRabbitMqModule)
+            configureMessageConfigure()}) {
+
+            val rabbitMqConfig by inject<RabbitMqConfig>()
+
+            assertEquals(rabbitMqConfig.host, "localhostTest")
+            assertEquals(rabbitMqConfig.amqpPort, "portTest")
+            assertEquals(rabbitMqConfig.connectionName, "connectionTest")
         }
     }
 }
