@@ -1,6 +1,6 @@
 package com.tbarauskas.features.driver.dto
 
-data class DriverView(
+data class DriverResponse(
     val name: String,
     val surname: String,
     val age: String,

@@ -1,0 +1,16 @@
+
+CREATE TABLE person(
+person_id BIGSERIAL PRIMARY KEY NOT NULL,
+name VARCHAR(25) NOT NULL,
+surname VARCHAR(35) NOT NULL,
+address_id INT ,
+FOREIGN KEY (address_id) REFERENCES address(address_id))
+
+INSERT INTO driver (driver_id, name, surname, age, driver_license, address_id)
+VALUES (1, 'Tomas', 'Barauskas', 40, 'Galioja', 2),
+(2, 'Paulius', 'Babenskas', 30, 'Flamingas', 1),
+(4, 'Felix', 'Navaro', null, 'Narcos', 3 )
+
+INSERT INTO person (person_id, name, surname, address_id)
+VALUES(1, 'Pranas','Vilkas',2),
+(2, 'Jokubas', 'Krumas',3)
