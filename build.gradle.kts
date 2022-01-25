@@ -10,6 +10,12 @@ val jupiter_version: String by project
 val mockk_version: String by project
 val strikt_version: String by project
 val slack_version: String by project
+val jdbi3_version: String by project
+val postgresql_version: String by project
+val hikari_version: String by project
+val exposed_version: String by project
+val impossibl_version: String by project
+
 
 plugins {
     application
@@ -56,6 +62,14 @@ dependencies {
     implementation ("com.github.JUtupe:ktor-rabbitmq:$ktor_rabbitmq_feature")
     implementation( "com.rabbitmq:amqp-client:$rabbitmq_version")
 
+//    database
+    implementation("org.jdbi:jdbi3-core:$jdbi3_version")
+    implementation("org.jdbi:jdbi3-kotlin:$jdbi3_version")
+    implementation("org.jdbi:jdbi3-sqlobject:$jdbi3_version")
+    implementation("org.jdbi:jdbi3-kotlin-sqlobject:$jdbi3_version")
+    implementation("org.postgresql:postgresql:$postgresql_version")
+    implementation("com.zaxxer:HikariCP:$hikari_version")
+
 //    test
     testImplementation("io.ktor:ktor-server-tests:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
@@ -70,7 +84,7 @@ dependencies {
 
 }
 
-// for understanding junit5
+// for project to understand junit5
 tasks.test {
     useJUnitPlatform()
 }

@@ -1,5 +1,8 @@
 package com.tbarauskas.plugins
 
+import com.tbarauskas.database.PostgresqlDataBaseConfig
+import com.tbarauskas.database.postgresqlDbModule
+import com.tbarauskas.features.driver.driverServiceModule
 import com.tbarauskas.features.messageQueue.messageQueueServiceModule
 import com.tbarauskas.features.rabbitMq.RabbitMqConfig
 import com.tbarauskas.features.slack.SlackConfig
@@ -16,10 +19,15 @@ fun Application.configureDependencyInjection(vararg moduleOverrides: Module) {
 
     val slackConfig: SlackConfig = SlackConfig.fromConfig(config)
     val rabbitMQConfig: RabbitMqConfig = RabbitMqConfig.fromConfig(config)
+    val postgresqlConfig: PostgresqlDataBaseConfig = PostgresqlDataBaseConfig.fromConfig(config)
 
     install(Koin) {
         modules(
-            messageQueueServiceModule(rabbitMQConfig), slackServiceModule(slackConfig), *moduleOverrides
+            messageQueueServiceModule(rabbitMQConfig), slackServiceModule(slackConfig),
+            postgresqlDbModule(postgresqlConfig),
+            driverServiceModule,
+
+            *moduleOverrides
         )
     }
 }
