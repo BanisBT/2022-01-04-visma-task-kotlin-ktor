@@ -15,6 +15,7 @@ val postgresql_version: String by project
 val hikari_version: String by project
 val exposed_version: String by project
 val impossibl_version: String by project
+val redis_lettuce_version: String by project
 
 
 plugins {
@@ -69,6 +70,9 @@ dependencies {
     implementation("org.jdbi:jdbi3-kotlin-sqlobject:$jdbi3_version")
     implementation("org.postgresql:postgresql:$postgresql_version")
     implementation("com.zaxxer:HikariCP:$hikari_version")
+
+//    redis db
+    implementation("io.lettuce:lettuce-core:$redis_lettuce_version")
 
 //    test
     testImplementation("io.ktor:ktor-server-tests:$ktor_version")

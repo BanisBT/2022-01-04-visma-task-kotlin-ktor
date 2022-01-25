@@ -3,13 +3,13 @@ package com.tbarauskas.database
 import com.typesafe.config.Config
 
 data class PostgresqlDataBaseConfig(
-    override val dataBaseManager: String,
+    val dataBaseManager: String,
+    val dataBaseName: String,
+    val username: String,
     override val host: String,
     override val port: String,
-    override val dataBaseName: String,
-    override val username: String,
     override val password: String
-): CommonDataBaseConfig {
+) : CommonDataBaseConfig {
 
     companion object {
         fun fromConfig(config: Config): PostgresqlDataBaseConfig {
