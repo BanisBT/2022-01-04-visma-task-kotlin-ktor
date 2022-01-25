@@ -70,11 +70,6 @@ dependencies {
     implementation("org.postgresql:postgresql:$postgresql_version")
     implementation("com.zaxxer:HikariCP:$hikari_version")
 
-//    exposed database
-    implementation("org.jetbrains.exposed", "exposed-core", exposed_version)
-    implementation("org.jetbrains.exposed", "exposed-jdbc", exposed_version)
-    implementation("com.impossibl.pgjdbc-ng:pgjdbc-ng:$impossibl_version")
-
 //    test
     testImplementation("io.ktor:ktor-server-tests:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
