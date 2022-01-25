@@ -13,6 +13,8 @@ val slack_version: String by project
 val jdbi3_version: String by project
 val postgresql_version: String by project
 val hikari_version: String by project
+val exposed_version: String by project
+val impossibl_version: String by project
 
 
 plugins {
@@ -67,6 +69,11 @@ dependencies {
     implementation("org.jdbi:jdbi3-kotlin-sqlobject:$jdbi3_version")
     implementation("org.postgresql:postgresql:$postgresql_version")
     implementation("com.zaxxer:HikariCP:$hikari_version")
+
+//    exposed database
+    implementation("org.jetbrains.exposed", "exposed-core", exposed_version)
+    implementation("org.jetbrains.exposed", "exposed-jdbc", exposed_version)
+    implementation("com.impossibl.pgjdbc-ng:pgjdbc-ng:$impossibl_version")
 
 //    test
     testImplementation("io.ktor:ktor-server-tests:$ktor_version")

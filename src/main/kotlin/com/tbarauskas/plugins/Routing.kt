@@ -1,5 +1,6 @@
 package com.tbarauskas.plugins
 
+import com.tbarauskas.features.address.registerAddressRouting
 import com.tbarauskas.features.driver.registerDriverRoutes
 import io.ktor.routing.*
 import io.ktor.http.*
@@ -15,4 +16,5 @@ fun Application.configureRouting() {
         }
     }
     registerDriverRoutes()
+    registerAddressRouting()
 }
