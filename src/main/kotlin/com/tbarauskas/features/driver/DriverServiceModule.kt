@@ -9,6 +9,6 @@ val driverServiceModule = module {
         get<Jdbi>().onDemand<DriverDAO>()
     }
     single {
-        DriverService(get())
+        DriverService(get(), get(), get())
     }
 }

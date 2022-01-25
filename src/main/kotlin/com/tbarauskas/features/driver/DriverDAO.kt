@@ -13,4 +13,7 @@ interface DriverDAO {
         a.flat_number FROM driver d INNER JOIN address a ON d.address_id = a.address_id
     """)
     fun getAllDriversWithAddress(): List<Driver>
+
+    @SqlQuery("SELECT driver_id, name, surname, age, driver_license FROM driver WHERE driver_id = :driverId")
+    fun getDriverById(driverId: Long): Driver
 }

@@ -9,6 +9,7 @@ import com.tbarauskas.features.messageQueue.messageQueueServiceModule
 import com.tbarauskas.features.rabbitMq.RabbitMqConfig
 import com.tbarauskas.features.slack.SlackConfig
 import com.tbarauskas.features.slack.slackServiceModule
+import com.tbarauskas.util.utilModule
 import com.typesafe.config.ConfigFactory
 import io.ktor.application.*
 import org.koin.core.module.Module
@@ -28,6 +29,7 @@ fun Application.configureDependencyInjection(vararg moduleOverrides: Module) {
         modules(
             messageQueueServiceModule(rabbitMQConfig), slackServiceModule(slackConfig),
             postgresqlDbModule(postgresqlConfig), redisCachingModule(redisConfig),
+            utilModule,
             driverServiceModule,
 
             *moduleOverrides

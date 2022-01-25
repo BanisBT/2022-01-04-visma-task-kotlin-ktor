@@ -17,6 +17,11 @@ fun Route.driverRouting() {
         get("/allWithAddress") {
             call.respond(driverService.getAllDriversWithAddress())
         }
+
+        get("/{id}") {
+            val driverId = checkNotNull(call.parameters["id"]).toLong()
+            call.respond(driverService.getDriverById(driverId))
+        }
     }
 }
 
