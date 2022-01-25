@@ -12,7 +12,10 @@ fun Route.driverRouting() {
 
         get("/all") {
             call.respond(driverService.getAllDrivers())
-            call.respond("All drivers")
+        }
+
+        get("/allWithAddress") {
+            call.respond(driverService.getAllDriversWithAddress())
         }
     }
 }
