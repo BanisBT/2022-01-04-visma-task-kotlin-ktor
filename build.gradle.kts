@@ -21,12 +21,24 @@ val redis_lettuce_version: String by project
 plugins {
     application
     kotlin("jvm") version "1.6.10"
+    id("org.liquibase.gradle") version "2.0.3"
 }
 
 group = "com.tbarauskas"
 version = "0.0.1"
 application {
     mainClass.set("com.tbarauskas.ApplicationKt")
+}
+
+liquibase {
+    activities.register("main") {
+        this.arguments = mapOf(
+            "logLevel" to "info",
+            "changeLogFile" to "srn/main/resources/db/master.xml",
+            "url" to "jdbc:postgresql://localhost:25432/elastum",
+            "username" to "testuser",
+            "password" to "testpass")
+    }
 }
 
 repositories {

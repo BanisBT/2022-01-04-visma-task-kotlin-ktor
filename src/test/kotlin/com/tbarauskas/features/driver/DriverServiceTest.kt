@@ -19,8 +19,6 @@ internal class DriverServiceTest : KoinTest {
     fun getDriverById() {
         withTestApplication({configure()}) {
             val driverService by inject<DriverService>()
-
-
         }
     }
 

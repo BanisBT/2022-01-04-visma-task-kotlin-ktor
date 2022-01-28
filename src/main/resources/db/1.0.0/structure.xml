@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
+    <changeSet  author="igor"  id="tag initial">
+        <tagDatabase tag="blank_db"/>
+    </changeSet>
+
+    <changeSet id="create_wallets" author="igors">
+        <createTable tableName="WALLETS">
+            <column name="WALLET_ID" type="UUID">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="PRIVATE_KEY" type="varchar(500)"/>
+            <column name="WALLET_ADDRESS" type="varchar(50)"/>
+            <column name="COIN" type="varchar(32)"/>
+            <column name="MNEMONIC" type="varchar(500)"/>
+            <column name="PARENT_WALLET_ID" type="UUID"/>
+            <column name="DISABLED" type="boolean"/>
+            <column name="CREATED_AT_UTC" type="timestamp"/>
+            <column name="UPDATED_AT_UTC" type="timestamp"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create_transactions" author="igors">
+        <createTable tableName="TRANSACTIONS">
+            <column name="TRANSACTION_ID" type="UUID">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="WALLET_ID" type="UUID">
+                <constraints foreignKeyName="fk_crypto_transaction_wallets"
+                             references="WALLETS(WALLET_ID)"
+                             nullable="true"
+                />
+            </column>
+            <column name="TRANSACTION_HASH" type="varchar(500)"/>
+            <column name="COIN" type="varchar(32)"/>
+            <column name="STATUS" type="varchar(64)"/>
+            <column name="NONCE" type="bigint"/>
+            <column name="RAW_TRANSACTION" type="boolean"/>
+            <column name="TOKEN_ID" type="bigint">
+            <!--
+
+                <constraints foreignKeyName="fk_crypto_transaction_tokens"
+                             references="ERC_TOKENS(id)"/>
+            -->
+
+            </column>
+            <column name="RECEIVER" type="varchar(64)"/>
+            <column name="AMOUNT" type="decimal(40, 0)"/>
+            <column name="TRANSACTION_FEES" type="decimal(40, 0)"/>
+            <column name="ERROR" type="text"/>
+            <column name="CREATED_AT_UTC" type="timestamp"/>
+            <column name="UPDATED_AT_UTC" type="timestamp"/>
+        </createTable>
+
+    </changeSet>
+</databaseChangeLog>

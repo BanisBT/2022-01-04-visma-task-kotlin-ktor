@@ -1,6 +1,28 @@
 version: '3.5'
 
 services:
+  postgres:
+    image: postgres:13-alpine
+    container_name: postgres-withdrawal
+    command: '-c full_page_writes=off -c fsync=off -c synchronous_commit=off'
+    ports:
+      - '25432:5432'
+    environment:
+      - POSTGRES_USER=testuser
+      - POSTGRES_PASSWORD=testpass
+      - POSTGRES_DB=elastum
+
+  waitpostgres:
+    image: postgres:13-alpine
+    links:
+      - postgres
+    depends_on:
+      - postgres
+    entrypoint:
+      - bash
+      - -c
+      - 'until /usr/local/bin/psql "host=postgres port=5432 dbname=elastum user=testuser password=testpass" -c "SELECT 1"; do sleep 5; done'
+
   redis:
     image: redis
     ports:

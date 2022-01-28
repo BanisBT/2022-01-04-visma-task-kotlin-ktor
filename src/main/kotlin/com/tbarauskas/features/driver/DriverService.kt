@@ -6,7 +6,6 @@ import com.tbarauskas.database.redis.CacheName
 import com.tbarauskas.database.redis.RedisCacheService
 import com.tbarauskas.features.driver.dto.DriverView
 import com.tbarauskas.features.driver.dto.DriverWithAddress
-import io.ktor.utils.io.*
 
 class DriverService(
     private val driverDAO: DriverDAO,
